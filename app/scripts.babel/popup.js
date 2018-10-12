@@ -1,4 +1,4 @@
-const netflixCategoriesURL = 'https://raw.githubusercontent.com/RobertJGabriel/netflix-secret-categories-json/master/index.json';
+const netflixCategoriesURL = './wallpapers.json';
 
 import Vue from 'vue';
 import VueResource from 'vue-resource'
