@@ -1,9 +1,12 @@
 {
-  "name": "netflix-hidden-categories",
+  "name": "ios-wallpapers",
   "private": true,
   "engines": {
     "node": ">=0.8.0"
   },
+  "scripts": {
+    "build" : "node create-json.js && gulp"
+},
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-loader": "^6.4.1",
@@ -66,6 +69,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "beautify-scrollbar": "^1.0.8",
+    "directory-tree": "^2.1.0",
     "i": "^0.3.6",
     "npm": "^6.4.1",
     "v2-lazy-list": "^2.2.5",
