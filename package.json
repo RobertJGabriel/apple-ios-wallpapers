@@ -5,7 +5,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "build" : "node create-json.js && gulp"
+    "build" : "gulp && node create-json.js"
 },
   "devDependencies": {
     "babel-core": "^6.0.0",

@@ -1,9 +1,17 @@
 # iOs wallpaper
 
+```
+
+## install everything 
+
+npm i
+
+## build 
+
+npm run build
 
 
-
-
+```
 ## License
 
 MIT © [Robert James Gabriel](https://www.robertgabriel.ninja)
