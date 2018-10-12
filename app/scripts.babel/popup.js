@@ -1,4 +1,4 @@
-const netflixCategoriesURL = './wallpapers.json';
+const wallpapersJSON = './scripts/wallpapers.json';
 
 import Vue from 'vue';
 import VueResource from 'vue-resource'
@@ -88,7 +88,7 @@ let vm = new Vue({
       this.loading = true; // Trigger the loading module
       // Make the api request
       let randomNumber = Math.floor((Math.random() * 10) + 1);
-      this.$http.get(netflixCategoriesURL, randomNumber, {
+      this.$http.get(wallpapersJSON, randomNumber, {
         headers: {
           'Cache-Control': 'no-cache'
         }
@@ -96,13 +96,11 @@ let vm = new Vue({
         response => {
           // get body data
 
+          console.table(JSON.parse(response.bodyText))
           const keys = JSON.parse(response.bodyText);
           // Loop though the objects to create the json
-          Object.keys(keys).map(id => {
-            let value = keys[id];
-            let object = new Category(id, value);
-            this.categories.push(object); // Push the new objects to the categories varabile.
-          });
+          console.table(keys.children)
+          console.table(keys.children.children)
           setTimeout(() => {
             this.loading = false;
           }, 500);
