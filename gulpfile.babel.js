@@ -96,7 +96,6 @@ gulp.task('babel', () => {
 
 
 
-gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'app/scripts/', 'app/styles/*.css']));
 
 gulp.task('watch', ['lint', 'babel'], () => {
   $.livereload.listen();
@@ -144,6 +143,6 @@ gulp.task('build', cb => {
     'size', cb);
 });
 
-gulp.task('default', ['clean'], cb => {
+gulp.task('default', cb => {
   runSequence('build', cb);
 });

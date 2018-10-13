@@ -1,9 +1,5 @@
 #app {
-  height: 600px;
-  max-width: 360px;
-  min-width: 360px;
-  overflow: auto;
-  width: 360px;
+
   background-color: #EEEEEE !important;
 }
 

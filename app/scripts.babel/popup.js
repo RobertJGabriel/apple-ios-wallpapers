@@ -45,7 +45,7 @@ library.add(
   faMoneyCheckAlt)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('vue-favorites', Favorites)
+Vue.component('vue-images', Favorites)
 Vue.component('pacman-loader', PacmanLoader);
 
 
@@ -61,13 +61,9 @@ let vm = new Vue({
   },
   data: {
     brandColor: '#db0000',
-    categories: [],
-    favorites: [],
+    photos: [],
     search: '',
-    loading: true,
-    paid: true,
-    license: 'EXPIRED',
-    currentTab: 'home'
+    loading: true
   },
   computed: {
     filteredResults() {
@@ -96,14 +92,30 @@ let vm = new Vue({
         response => {
           // get body data
 
-          console.table(JSON.parse(response.bodyText))
+
           const keys = JSON.parse(response.bodyText);
           // Loop though the objects to create the json
-          console.table(keys.children)
-          console.table(keys.children.children)
-          setTimeout(() => {
-            this.loading = false;
-          }, 500);
+
+
+          for (var key in keys.children) {
+            var keyId = key;
+
+            let object = {
+              group: keys.children[keyId].name,
+              photos: keys.children[keyId].children
+            }
+
+    
+            this.photos.push(object);
+          }
+
+          this.photos.sort(function (a, b) {
+            if (a.group !== b.group) {
+              return a.group - b.group
+            }
+          });
+
+
         },
         response => {
           // error callback
@@ -118,35 +130,10 @@ let vm = new Vue({
         setTimeout(resolve, ms);
       });
     },
-    updateFavorites(item, index, fav) {
-
-      if (!this.paid) return false; // Disable this feature if not paided
-
-      item.favorite = fav; // Update the status of the object
-
-      // If favorite, set as true
-      if (fav) {
-        localStorage.setItem(item.value.toLowerCase(), true);
-      }
-
-      // If favorite is false
-      if (!fav) {
-        localStorage.removeItem(item.value.toLowerCase());
-      }
-
-      // Set the object details
-      this.$set(this.categories, index, item);
-    },
 
 
-    updateLicense(license) {
-      if ((license.license == 'FULL') || (license.license == 'TRIAL')) {
-        this.paid = true;
-      } else {
-        this.paid = false;
-      }
-      this.license = license.license;
-    },
+
+
     switchView(view) {
       this.loading = true;
       this.currentTab = view; // Switch the view tabs

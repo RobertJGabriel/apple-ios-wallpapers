@@ -16,7 +16,7 @@
 
     <!-- Search Bar message -->
     <div class="navbar">
-      <div class="is-empty  search" v-if="paid">
+      <div class="is-empty  search">
         <input type="text" class="form-control col-md-8" placeholder="Search" id="comment" v-model="search">
       </div>
 
@@ -27,17 +27,7 @@
     <div class="row padding-top">
 
 
-      <div class="col-sm-12" v-if="currentTab == 'favorites' && !loading">
-        <h4>Favorites</h4>
 
-        <!-- Loading of catogories -->
-        <ul v-cloak v-if="paid" class="categories">
-
-          <vue-favorites v-for="( item, index) in filteredFavorites" :key="index" v-bind:paid="paid" v-bind:item="item"
-            v-bind:index="index"></vue-favorites>
-
-        </ul>
-      </div>
 
 
 
@@ -45,6 +35,17 @@
         <div class="loadingPacman">
           <pacman-loader :loading="true" :color="brandColor"></pacman-loader>
         </div>
+
+
+
+
+        <div  v-for="item in photos">
+          <h1>iOs{{item.group}}</h1>
+            
+            <vue-images v-for="check in item.photos"  v-bind:item="check" v-bind:group="item.group"></vue-images>
+ 
+          </div>
+
       </div>
 
 

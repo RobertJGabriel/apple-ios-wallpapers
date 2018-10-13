@@ -2,7 +2,7 @@ const dirTree = require('directory-tree');
 var fs = require('fs');
 
 
-const tree = dirTree('app/images/', ['.jpg', '.png'], (item, PATH) => {
+const tree = dirTree('app/images/', {extensions: /(?:jpg|png)$/}, (item, PATH) => {
 });
 
 fs.writeFile("dist/scripts/wallpapers.json", JSON.stringify(tree), 'utf8', function (err) {
