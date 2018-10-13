@@ -2,8 +2,7 @@ const wallpapersJSON = './scripts/wallpapers.json';
 
 import Vue from 'vue';
 import VueResource from 'vue-resource'
-import Favorites from './components/favorites.vue';
-import Category from './class/category';
+import Favorites from './components/images.vue';
 import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
 
 import {
@@ -67,15 +66,10 @@ let vm = new Vue({
   },
   computed: {
     filteredResults() {
-      return this.categories.filter(category => {
+      return this.photos.filter(photo => {
         return !this.search ||
-          category.value.toLowerCase().includes(this.search.toLowerCase())
+        photo.group.toLowerCase().includes(this.search.toLowerCase())
       })
-    },
-    filteredFavorites() {
-      return this.categories.filter((category) => {
-        return category.favorite == true;
-      });
     }
   },
   methods: {

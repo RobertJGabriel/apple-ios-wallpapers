@@ -32,6 +32,7 @@
 
 
       <div class="col-sm-12" v-if="loading">
+
         <div class="loadingPacman">
           <pacman-loader :loading="true" :color="brandColor"></pacman-loader>
         </div>
@@ -39,12 +40,15 @@
 
 
 
-        <div  v-for="item in photos">
-          <h1>iOs{{item.group}}</h1>
-            
-            <vue-images v-for="check in item.photos"  v-bind:item="check" v-bind:group="item.group"></vue-images>
- 
+        <div class="mcgallery">
+          <div v-for="item in photos">
+              <h1>iOs{{item.group}}</h1>
+              <vue-images v-for="check in item.photos" v-bind:item="check" v-bind:group="item.group"></vue-images>
+
           </div>
+        </div>
+
+   
 
       </div>
 
