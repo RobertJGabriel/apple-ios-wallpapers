@@ -5,8 +5,8 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "build": "gulp && node create-json.js && http-server dist",
-    "test": "gulp && http-server dist"
+    "build": "gulp && node create-json.js && http-server docs",
+    "test": "gulp && http-server docs"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

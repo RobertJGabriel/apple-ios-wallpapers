@@ -26,7 +26,7 @@ gulp.task('extras', () => {
   ], {
     base: 'app',
     dot: true
-  }).pipe(gulp.dest('dist'));
+  }).pipe(gulp.dest('docs'));
 });
 
 function lint(files, options) {
@@ -64,7 +64,7 @@ gulp.task('images', () => {
         console.log(err);
         this.end();
       })))
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('docs/images'));
 });
 
 gulp.task('html', () => {
@@ -79,7 +79,7 @@ gulp.task('html', () => {
       removeComments: true,
       collapseWhitespace: true
     })))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('docs'));
 });
 
 
@@ -114,7 +114,7 @@ gulp.task('watch', ['lint', 'babel'], () => {
 });
 
 gulp.task('size', () => {
-  return gulp.src('dist/**/*').pipe($.size({
+  return gulp.src('docs/**/*').pipe($.size({
     title: 'build',
     gzip: true
   }));
