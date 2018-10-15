@@ -33,17 +33,9 @@
         <div class="menu-container">
           <!-- Menu -->
           <ul class="menu">
-
             <li class="menu-mac" v-bind:class="{ hidden: isOpen}">
               <a href="#">
                 <span>iOs Wallpapers</span>
-              </a>
-            </li>
-
-
-            <li class="menu-support" v-bind:class="{ hidden: isOpen}">
-              <a href="#">
-                <span>Support</span>
               </a>
             </li>
             <li class="menu-search" v-bind:class="{ floatLeft: isOpen}">
@@ -51,7 +43,6 @@
                 <font-awesome-icon icon="search" prefix="fa" />
               </a>
             </li>
-
           </ul>
 
           <!-- Search -->
@@ -63,7 +54,7 @@
                 </a>
                 <input class="menu-search-input" ref="search" type="text" aria-label="Search iOs Wallpapers"
                   placeholder="Search iOs Wallpapers" autocorrect="off" autocapitalize="off" autocomplete="off"
-                  spellcheck="false" id="comment" v-model="search">
+                  spellcheck="false" v-model="search">
               </form>
             </div>
             <a class="menu-search-close" href="#">
@@ -72,8 +63,8 @@
             <div class="search-sub-menu">
               <h3>Quick Links</h3>
               <ul>
-                <li><a href="https://www.robertgabriel.ninja">Made by Robert James Gabriel. Looking for work.</a></li>
-                <li><a href="https://www.robertgabriel.ninja">Made by Robert James Gabriel</a></li>
+                <li><a href="https://www.robertgabriel.ninja" target="_blank">Made by Robert James Gabriel. Looking for work.</a></li>
+                <li><a href="https://photos.google.com/share/AF1QipNi8VN2pw2Ya_xCV8eFgzEZmiXDy1-GwhXbqFtvXoH3HypF10as9puV8FdoVZpOZA?key=WkZjQTIxQTM5a01oZkNUYTE2ZllKTVJKZk1CMTR3" target="_blank">Check out the Google photos group</a></li>
               </ul>
             </div>
           </div>
@@ -85,26 +76,14 @@
 
     <div class="container">
       <div class="row">
-        <div class="column flexContainer" v-for="item in filteredResults">
-          <h2 id="#`${item.group}`">{{ item.iOs }}</h2>
-          <vue-images class="item" v-for="check in item.photos" v-bind:item="check" v-bind:group="item.group"></vue-images>
+        <div>
+          <div class="column flexContainer" v-for="( item,index2) in  filteredResults" v-bind:key="index2">
+            <h2 id="#`${item.group}`">{{ item.iOs }}</h2>
+            <vue-images class="item" v-for="( check, index)  in item.photos" v-bind:key="check.name" v-bind:item="check"
+              v-bind:group="item.group"></vue-images>
+          </div>
         </div>
-
-
-
-        <div class="loadingPacman">
-          <pacman-loader :loading="true"></pacman-loader>
-        </div>
-
-
-
-
-
       </div>
-
-
-
-
     </div>
   </div>
   <script src="./scripts/popup.min.js" type="text/javascript"></script>

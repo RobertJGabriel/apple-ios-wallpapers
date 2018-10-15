@@ -46,14 +46,14 @@ let vm = new Vue({
   },
   computed: {
     filteredResults() {
-
-
       return this.photos.filter(photo => {
-        return photo.group.includes(parseFloat(this.search));
+        if(!this.search){
+          return this.photos.sort((a, b) => parseFloat(b.group) - parseFloat(a.group));
+        }else{
+          return   this.shuffle(photo.group.includes(parseFloat(this.search)));
+        }
+       
       });
-
-
-
 
     }
   },
@@ -62,8 +62,14 @@ let vm = new Vue({
     isNumber(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     },
+    shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    },
     load() {
-      this.loading = true; // Trigger the loading module
       // Make the api request
       let randomNumber = Math.floor((Math.random() * 10) + 1);
       this.$http.get(wallpapersJSON, randomNumber, {
@@ -98,21 +104,15 @@ let vm = new Vue({
           }
 
           this.photos.sort((a, b) => parseFloat(b.group) - parseFloat(a.group));
-
+          this.loading = false;
 
         },
         response => {
           // error callback
-          this.loading = true;
+          this.loading = false;
           this.categories = [];
         }
       )
-    },
-    // returns a promise that resolves after the specified number of ms
-    delay(ms) {
-      return new Promise(resolve => {
-        setTimeout(resolve, ms);
-      });
     },
     open(e) {
       console.log("open");

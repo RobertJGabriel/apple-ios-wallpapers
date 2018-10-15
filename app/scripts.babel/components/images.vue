@@ -2,7 +2,7 @@
 
 
   <a v-bind:href="`images/${group}/${item.name}`" class="img" download>
-    <pimg fetchOnDemand placeholder="images/1/loading.gif" class="img responsive-image" v-bind:src="`images/${group}/${item.name}`"
+    <pimg fetchOnDemand placeholder="images/1/loading.gif" class="img responsive-image" v-bind:src="`images/${group}/${item.name}?p=${item.name}`"
       v-bind:alt="`${item.name}`" />
   </a>
 
@@ -12,6 +12,7 @@
 <script>
   import pimg from 'pimg/vue';
   export default {
+    cache: false,
     components: {
       pimg
     },
