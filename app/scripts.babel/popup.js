@@ -13,41 +13,15 @@ import {
   FontAwesomeIcon
 } from "@fortawesome/vue-fontawesome";
 import {
-  faHeart
-} from '@fortawesome/free-solid-svg-icons/faHeart'
-import {
-  faHome
-} from '@fortawesome/free-solid-svg-icons/faHome'
-import {
-  faCogs
-} from '@fortawesome/free-solid-svg-icons/faCogs'
-import {
-  faMoneyBillAlt
-} from '@fortawesome/free-solid-svg-icons/faMoneyBillAlt'
-import {
-  faQuestionCircle
-} from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
-import {
-  faEraser
-} from '@fortawesome/free-solid-svg-icons/faEraser'
-import {
-  faMoneyCheckAlt
-} from '@fortawesome/free-solid-svg-icons/faMoneyCheckAlt'
-
-import {
   faSearch
 } from '@fortawesome/free-solid-svg-icons/faSearch'
 
+import {
+  faTimes
+} from '@fortawesome/free-solid-svg-icons/faTimes'
 
-library.add(
-  faHeart,
-  faHome,
-  faCogs,
-  faMoneyBillAlt,
-  faQuestionCircle,
-  faEraser,
-  faMoneyCheckAlt,
-  faSearch)
+
+library.add(faSearch, faTimes)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('vue-images', Images)
@@ -67,14 +41,20 @@ let vm = new Vue({
   data: {
     photos: [],
     search: '',
-    loading: true
+    loading: true,
+    isOpen: false
   },
   computed: {
     filteredResults() {
+
+
       return this.photos.filter(photo => {
-        return !this.search ||
-          photo.group.toLowerCase().includes(this.search.toLowerCase())
-      })
+        return photo.group.includes(parseFloat(this.search));
+      });
+
+
+
+
     }
   },
   methods: {
@@ -94,30 +74,30 @@ let vm = new Vue({
         response => {
           // get body data
 
-
           const keys = JSON.parse(response.bodyText);
           // Loop though the objects to create the json
-
 
           for (const key in keys.children) {
             const keyId = key;
 
             const group = keys.children[keyId].name;
             let iOs = keys.children[keyId].name;
-            if (this.isNumber(group)) {
-              iOs = `iOs ${group}`;
-              let object = {
-                group,
-                iOs,
-                photos: keys.children[keyId].children
-              }
-              this.photos.push(object);
+
+            if (!this.isNumber(group)) return false;
+
+            iOs = `iOs ${group}`;
+
+            let object = {
+              group,
+              iOs,
+              photos: keys.children[keyId].children
             }
+
+            this.photos.push(object);
 
           }
 
-
-          this.photos.sort((a, b) =>   parseFloat(b.group)- parseFloat(a.group));
+          this.photos.sort((a, b) => parseFloat(b.group) - parseFloat(a.group));
 
 
         },
@@ -133,8 +113,53 @@ let vm = new Vue({
       return new Promise(resolve => {
         setTimeout(resolve, ms);
       });
+    },
+    open(e) {
+      console.log("open");
+      this.isOpen = true;
+      this.$nextTick(() => {
+        this.$refs.search.focus();
+      })
+    },
+    outside(e) {
+      console.log("outside");
+      this.isOpen = false;
     }
 
+  },
+  directives: {
+    'click-outside': {
+      bind(el, binding, vNode) {
+        // Provided expression must evaluate to a function.
+        if (typeof binding.value !== 'function') {
+          const compName = vNode.context.name
+          let warn = `[Vue-click-outside:] provided expression '${binding.expression}' is not a function, but has to be`
+          if (compName) {
+            warn += `Found in component '${compName}'`
+          }
+
+          console.warn(warn)
+        }
+        // Define Handler and cache it on the element
+        const bubble = binding.modifiers.bubble
+        const handler = (e) => {
+          if (bubble || (!el.contains(e.target) && el !== e.target)) {
+            binding.value(e)
+          }
+        }
+        el.__vueClickOutside__ = handler
+
+        // add Event Listeners
+        document.addEventListener('click', handler)
+      },
+
+      unbind(el, binding) {
+        // Remove Event Listeners
+        document.removeEventListener('click', el.__vueClickOutside__)
+        el.__vueClickOutside__ = null
+
+      }
+    }
   }
 
 });

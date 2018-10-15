@@ -1,7 +1,5 @@
 import gulp from 'gulp';
-import concat from 'gulp-concat';
 import gulpLoadPlugins from 'gulp-load-plugins';
-import del from 'del';
 import sass from 'gulp-sass';
 import runSequence from 'run-sequence';
 import webpackStream from 'webpack-stream';
@@ -18,6 +16,8 @@ gulp.task('extras', () => {
   return gulp.src([
     'app/*.*',
     'app/scripts/**/*.js',
+    'app/images/**/*.svg',
+    'app/images/**/*.webmanifest',
     'app/scripts/**/*.min.css',
     'app/_locales/**',
     '!app/scripts.babel',
