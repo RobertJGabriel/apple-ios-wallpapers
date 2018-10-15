@@ -2,7 +2,8 @@
 
 
   <a v-bind:href="`images/${group}/${item.name}`" class="img" download>
-    <pimg fetchOnDemand class="img responsive-image" v-bind:src="`images/${group}/${item.name}`" v-bind:alt="`${item.name}`" />
+    <pimg fetchOnDemand placeholder="images/1/loading.gif" class="img responsive-image" v-bind:src="`images/${group}/${item.name}`"
+      v-bind:alt="`${item.name}`" />
   </a>
 
 </template>
@@ -24,14 +25,13 @@
 
 
 <style lang="css" scoped>
-img,.pimg,.img>>>img{
-  display: block;
-  max-width: 100%;
+  img,
+  .pimg,
+  .img>>>img {
+    display: block;
+    max-width: 100%;
     height: auto;
     margin-right: auto;
     margin-left: auto;
-}
-
-
-
+  }
 </style>
