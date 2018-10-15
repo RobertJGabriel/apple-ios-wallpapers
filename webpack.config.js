@@ -9,7 +9,6 @@ module.exports = {
     'popup.min.js': './scripts.babel/popup.js',
     'bundle.min.css': [
       './styles/vendor/bootstrap.css',
-      './styles/vendor/material.css',
       './styles/app/popup.css',
     ],
   },
