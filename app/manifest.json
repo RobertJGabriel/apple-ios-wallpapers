@@ -1,0 +1,42 @@
+{
+  "short_name": "Wallpapers",
+  "name": "Wallpapers",
+  "background_color": "#FFFFFF",
+  "theme_color": "#24292E",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "./",
+  "icons": [{
+      "src": "extra/16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "extra/32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "extra/192.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "extra/192.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "extra/192.png",
+      "type": "image/png",
+      "sizes": "196x196"
+    },
+    {
+      "src": "extra/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html?from=app",
+  "description": "Browse and download every iOs wallpaper. By Robert James Gabriel"
+}

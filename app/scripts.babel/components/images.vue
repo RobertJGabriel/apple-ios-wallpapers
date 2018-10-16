@@ -1,9 +1,9 @@
 <template>
 
 
-  <a v-bind:href="`images/${group}/${item.name}`" class="img" download>
+  <a v-bind:href="`images/${group}/${item.name}`" :aria-label="item.name" class="img" download>
     <pimg fetchOnDemand placeholder="images/1/loading.gif" class="img responsive-image" v-bind:src="`images/${group}/${item.name}?p=${item.name}`"
-      v-bind:alt="`${item.name}`" />
+      v-bind:alt="item.name" />
   </a>
 
 </template>

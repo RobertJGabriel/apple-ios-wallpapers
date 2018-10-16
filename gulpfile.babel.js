@@ -1,9 +1,15 @@
 import gulp from 'gulp';
+import del from 'del'
+import glob from 'glob';
+import hash from 'hash-files'
 import gulpLoadPlugins from 'gulp-load-plugins';
 import sass from 'gulp-sass';
 import runSequence from 'run-sequence';
 import webpackStream from 'webpack-stream';
 import webpack from 'webpack';
+import replace from 'gulp-replace'
+import jsesc from 'jsesc'
+import rename from 'gulp-rename'
 import {
   stream as wiredep
 } from 'wiredep';
@@ -15,6 +21,7 @@ const $ = gulpLoadPlugins();
 gulp.task('extras', () => {
   return gulp.src([
     'app/*.*',
+    'app/manifest.json',
     'app/scripts/**/*.js',
     'app/images/**/*.svg',
     'app/images/**/*.webmanifest',
@@ -136,12 +143,99 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
+
+
+
+var stringify = value => {
+  return jsesc(value, {
+    wrap: true,
+    compact: false,
+    indentLevel: 3
+  })
+}
+
+var shortHash = files => {
+  return hash
+    .sync({
+      files: files
+    })
+    .slice(0, 8)
+}
+
+var assets = ['docs/**/*.*']
+
+gulp.task('cache', () => {
+  var assets = [
+    ...glob.sync('docs/scripts/**/*.*'),
+    ...glob.sync('docs/scripts/**/*.min.css'),
+    ...glob.sync('docs/scripts/**/*.json'),
+    ...glob.sync('docs/**/*.html'),
+    ...glob.sync('docs/**/*.js'),
+    ...glob.sync('docs/images/**/*.svg'),
+    ...glob.sync('docs/images/**/*.*')
+  ]
+  var assetsHash = shortHash(assets)
+  var assetCacheList = [
+    '/',
+    ...assets
+    // Remove all `images/icon-*` files except for the one used in
+    // the HTML.
+    .filter(
+      path =>
+      !path.includes('images/icon-') || path.includes('icon-228x228.png')
+    )
+    .map(path => path.replace(/^docs\//, '/'))
+  ]
+
+  gulp
+    .src('./app/scripts.babel/sw.js')
+    .pipe(replace('%HASH%', stringify(assetsHash)))
+    .pipe(replace('%CACHE_LIST%', stringify(assetCacheList)))
+    .pipe(
+      rename(path => {
+        path.basename = assetsHash
+      })
+    )
+    .pipe(gulp.dest('docs/'))
+
+  gulp
+    .src('docs/**/*.html')
+    .pipe(
+      replace(
+        /(<\/body>)/g,
+        `<script>
+				  if ('serviceWorker' in navigator) {
+					  navigator.serviceWorker.register('/${assetsHash}.js');
+				  }
+			  </script>$1`
+      )
+    )
+    .pipe(gulp.dest('docs/'))
+
+  return del(['docs/service-worker.js'])
+})
+
+
+
+
+
 gulp.task('build', cb => {
   runSequence(
     'html', 'css',
     'lint', 'babel', 'images', 'extras',
-    'size', cb);
+    'size','cache', cb);
 });
+
+
+
+
+
+
+
+
+
+
+
 
 gulp.task('default', cb => {
   runSequence('build', cb);

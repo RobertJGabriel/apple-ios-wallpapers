@@ -48,9 +48,10 @@ let vm = new Vue({
     filteredResults() {
       return this.photos.filter(photo => {
         if(!this.search){
-          return this.photos.sort((a, b) => parseFloat(b.group) - parseFloat(a.group));
+          return this.photos.sort((a, b) =>  parseFloat(a.group) - parseFloat(b.group) );
         }else{
-          return   this.shuffle(photo.group.includes(parseFloat(this.search)));
+        
+          return   photo.group.includes(parseFloat(this.search));
         }
        
       });
