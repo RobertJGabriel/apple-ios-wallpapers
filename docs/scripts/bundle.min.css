@@ -57,22 +57,30 @@ code {
   font-size: 1em;
 }
 
-input {
+button,input {
   margin: 0;
   font: inherit;
   color: inherit;
 }
 
-html input[type="button"],input[type="reset"],input[type="submit"] {
+button {
+  overflow: visible;
+}
+
+button {
+  text-transform: none;
+}
+
+button,html input[type="button"],input[type="reset"],input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer;
 }
 
-html input[disabled] {
+button[disabled],html input[disabled] {
   cursor: default;
 }
 
-input::-moz-focus-inner {
+button::-moz-focus-inner,input::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
@@ -165,7 +173,7 @@ body {
   background-color: #fff;
 }
 
-input {
+input,button {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -455,6 +463,14 @@ a.label:hover,a.label:focus {
   cursor: pointer;
   filter: alpha(opacity=50);
   opacity: .5;
+}
+
+button.close {
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
 }
 
 .container:before,.container:after,.row:before,.row:after,.nav:before,.nav:after {

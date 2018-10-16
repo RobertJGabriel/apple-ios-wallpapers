@@ -33,12 +33,12 @@
           <!-- Menu -->
           <ul class="menu">
             <li class="menu-mac" v-bind:class="{ hidden: isOpen}">
-              <a href="/">
+              <a href="/" aria-label="Home link">
                 <span>iOs Wallpapers</span>
               </a>
             </li>
             <li class="menu-search" v-bind:class="{ floatLeft: isOpen}">
-              <a href="/" v-on:click="open" v-click-outside="outside">
+              <a href="/" aria-label="Search button" v-on:click="open" v-click-outside="outside">
                 <font-awesome-icon icon="search" prefix="fa" />
               </a>
             </li>
@@ -72,6 +72,7 @@
                 <li><a href="https://github.com/RobertJGabriel/apple-ios-wallpapers" rel="noopener" target="_blank">View
                     the source
                     code here.</a></li>
+                <li><a href="https://www.paypal.me/robertjgabriel" rel="noopener" target="_blank">Donate.</a></li>
               </ul>
             </div>
           </div>

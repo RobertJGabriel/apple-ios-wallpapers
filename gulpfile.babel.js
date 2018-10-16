@@ -26,9 +26,7 @@ gulp.task('extras', () => {
     'app/images/**/*.svg',
     'app/images/**/*.webmanifest',
     'app/scripts/**/*.min.css',
-    'app/_locales/**',
     '!app/scripts.babel',
-    '!app/*.json',
     '!app/*.html'
   ], {
     base: 'app',
