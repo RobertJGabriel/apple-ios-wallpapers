@@ -4,6 +4,7 @@ import Vue from 'vue';
 import VueResource from 'vue-resource'
 import Images from './components/images.vue';
 import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
+import VueLazyImage from "vue-lazy-images";
 
 
 import {
@@ -29,7 +30,7 @@ Vue.component('pacman-loader', PacmanLoader);
 
 
 Vue.use(VueResource);
-
+Vue.use(VueLazyImage)
 /* eslint-disable no-new */
 let vm = new Vue({
   el: '#app',
@@ -47,13 +48,11 @@ let vm = new Vue({
   computed: {
     filteredResults() {
       return this.photos.filter(photo => {
-        if(!this.search){
-          return this.photos.sort((a, b) =>  parseFloat(a.group) - parseFloat(b.group) );
-        }else{
-        
-          return   photo.group.includes(parseFloat(this.search));
+        if (!this.search) {
+          return this.photos.sort((a, b) => parseFloat(a.group) - parseFloat(b.group));
+        } else {
+          return photo.group.includes(parseFloat(this.search));
         }
-       
       });
 
     }
@@ -72,12 +71,7 @@ let vm = new Vue({
     },
     load() {
       // Make the api request
-      let randomNumber = Math.floor((Math.random() * 10) + 1);
-      this.$http.get(wallpapersJSON, randomNumber, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      }).then(
+      this.$http.get(wallpapersJSON).then(
         response => {
           // get body data
 
@@ -116,14 +110,14 @@ let vm = new Vue({
       )
     },
     open(e) {
-      console.log("open");
+      e.stopPropagation();
+
       this.isOpen = true;
       this.$nextTick(() => {
         this.$refs.search.focus();
       })
     },
     outside(e) {
-      console.log("outside");
       this.isOpen = false;
     }
 

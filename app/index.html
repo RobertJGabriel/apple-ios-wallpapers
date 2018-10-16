@@ -16,7 +16,6 @@
   <link rel="apple-touch-icon" sizes="120x120" href="images/extra/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="images/extra/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/extra/favicon-16x16.png">
-  <link rel="manifest" href="images/extra/site.webmanifest">
   <link rel="mask-icon" href="images/extra/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
@@ -38,7 +37,7 @@
               </a>
             </li>
             <li class="menu-search" v-bind:class="{ floatLeft: isOpen}">
-              <a href="/" aria-label="Search button" v-on:click="open" v-click-outside="outside">
+              <a href="/" aria-label="Search button" @click.prevent="open" v-click-outside="outside">
                 <font-awesome-icon icon="search" prefix="fa" />
               </a>
             </li>

@@ -6,7 +6,8 @@
   },
   "scripts": {
     "build": "gulp && node create-json.js && http-server docs",
-    "test": "gulp && http-server docs"
+    "test": "gulp && http-server docs",
+    "dev": "gulp build-develop  && http-server docs"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -81,6 +82,8 @@
     "pimg": "^1.1.3",
     "v-lazy-image": "^1.2.2",
     "v2-lazy-list": "^2.2.5",
+    "vanilla-lazyload": "^8.17.0",
+    "vue-lazy-images": "^1.4.6",
     "vue-loading-spinner": "^1.0.11",
     "vue-resource": "^1.5.1",
     "vue-spinner": "^1.0.3",

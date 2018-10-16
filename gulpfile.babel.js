@@ -225,6 +225,13 @@ gulp.task('build', cb => {
 });
 
 
+gulp.task('build-develop', cb => {
+  runSequence(
+    'html', 'css',
+    'lint', 'babel', 'extras', cb);
+});
+
+
 
 
 
