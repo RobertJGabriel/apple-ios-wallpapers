@@ -1,26 +1,76 @@
+
 # iOs wallpaper
 
-```
+## About
 
-## install everything 
+A vue app that allows you to browse all past ios wallpapers. iOs 1 - 12
+
+
+
+## Getting Started
+
+```sh
+
+# Install
 
 npm i
 
-## build 
+# Build
+npm run dev
 
+# Transform updated source written by ES2015 (default option)
+gulp babel
+
+# or Using watch to update source continuously
+
+# Make a production version 
 npm run build
-
-
 ```
-## License
 
-MIT © [Robert James Gabriel](https://www.robertgabriel.ninja)
+## Add  a new image.
 
-[npm-image]: https://badge.fury.io/js/github-issue-logger.svg
-[npm-url]: https://npmjs.org/package/github-issue-logger
-[travis-image]: https://travis-ci.org/RobertJGabriel/github-issue-logger.svg?branch=master
-[travis-url]: https://www.travis-ci.com/RobertJGabriel/github-issue-logger
-[daviddm-image]: https://david-dm.org/RobertJGabriel/github-issue-logger.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/RobertJGabriel/github-issue-logger
-[coveralls-image]: https://coveralls.io/repos/RobertJGabriel/github-issue-logger/badge.svg
-[coveralls-url]: https://coveralls.io/r/RobertJGabriel/github-issue-logger
+Create a pr and add it to the folder under app/images/
+
+## build tasks
+
+### Babel
+
+The generator supports ES 2015 syntax through babel transforming. You may have a source files in `script.babel` if your project has been generated without `--no-babel` options. While developing, When those of source has been changed, `gulp babel` should be run before test and run a extension on Chrome.
+
+```sh
+npm run build
+```
+
+### Build and Package
+
+It will build your app as a result you can have a distribution version of the app in `dist`. Run this command to build your Chrome Extension app.
+
+```bash
+npm run  build
+```
+
+
+## Options
+
+* `--no-babel`
+
+  If you wouldn't use [Babel](https://babeljs.io/) ES2015 transpiler.
+
+* `--skip-install`
+
+  Skips the automatic execution of `bower` and `npm` after
+  scaffolding has finished.
+
+* `--test-framework=[framework]`
+
+  Defaults to `mocha`. Can be switched for
+  another supported testing framework like `jasmine`.
+
+* `--sass`
+
+  Add support for [Sass](http://sass-lang.com/libsass).
+
+* `--all-permissions`
+
+  All of permissions of chrome extension will be shown.
+
