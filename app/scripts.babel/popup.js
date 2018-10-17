@@ -4,7 +4,6 @@ const wallpapersJSON = './scripts/wallpapers.json';
 import Vue from 'vue';
 import VueResource from 'vue-resource'
 import Images from './components/images.vue';
-import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
 import VueLazyImage from "vue-lazy-images";
 
 
@@ -32,34 +31,70 @@ Vue.use(VueResource);
 Vue.use(VueLazyImage)
 
 /* eslint-disable no-new */
-let vm = new Vue({
+new Vue({
   el: '#app',
   components: {
     FontAwesomeIcon,
-    Images,
-    BounceLoader
+    Images
   },
   data: {
     photos: [],
     search: '',
-    isEmpty: false,
-    isOpen: false
+    isOpen: false,
+    loading: true
   },
   computed: {
     filteredResults() {
       return this.photos.filter(photo => {
         if (!this.search) {
-          this.isEmpty = false;
           return this.photos.sort((a, b) => parseFloat(a.group) - parseFloat(b.group)); // Sorting alorgthim iOS 12 - 1
         } else {
           let searchResult = photo.group.includes(parseFloat(this.search));
-          console.log(searchResult);
-          this.isEmpty = searchResult;
-
           return searchResult;
         }
       });
+    },
+    searchResult() {
+      if (this.filteredResults.length === 0 && this.loading == false) {
+        return `No Wallpapers found for "${this.search}"`;
+      }
     }
+  },
+  mounted: function () {
+    // Make the api request
+    this.$http.get(wallpapersJSON).then(
+      response => {
+        // get body data
+
+        const keys = JSON.parse(response.bodyText);
+        // Loop though the objects to create the json
+        for (const key in keys.children) {
+          const keyId = key;
+
+          const group = keys.children[keyId].name;
+          let iOs = keys.children[keyId].name;
+
+          if (!this.isNumber(group)) return false;
+
+          iOs = `iOs ${group}`;
+
+          let object = {
+            group,
+            iOs,
+            photos: keys.children[keyId].children
+          }
+          this.photos.push(object);
+          this.loading = false;
+        }
+        this.photos.sort((a, b) => parseFloat(b.group) - parseFloat(a.group));
+      },
+      response => {
+        // error callback
+        console.error(response);
+        this.photos = [];
+        this.loading = false;
+      }
+    )
   },
   methods: {
     /**
@@ -68,51 +103,9 @@ let vm = new Vue({
     isNumber(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     },
-    /**
-     * Onload event.
-     * Not using mount or create for low dead wifi issues.
-     */
-    load() {
-      // Make the api request
-      this.$http.get(wallpapersJSON).then(
-        response => {
-          // get body data
 
-          const keys = JSON.parse(response.bodyText);
-          // Loop though the objects to create the json
-          for (const key in keys.children) {
-            const keyId = key;
-
-            const group = keys.children[keyId].name;
-            let iOs = keys.children[keyId].name;
-
-            if (!this.isNumber(group)) return false;
-
-            iOs = `iOs ${group}`;
-
-            let object = {
-              group,
-              iOs,
-              photos: keys.children[keyId].children
-            }
-
-            this.photos.push(object);
-
-          }
-
-          this.photos.sort((a, b) => parseFloat(b.group) - parseFloat(a.group));
-
-        },
-        response => {
-          // error callback
-          console.error(response);
-          this.photos = [];
-        }
-      )
-    },
     open(e) {
       e.stopPropagation();
-
       this.isOpen = true;
       this.$nextTick(() => {
         this.$refs.search.focus();
@@ -133,7 +126,6 @@ let vm = new Vue({
           if (compName) {
             warn += `Found in component '${compName}'`
           }
-
           console.warn(warn)
         }
         // Define Handler and cache it on the element
@@ -159,4 +151,3 @@ let vm = new Vue({
   }
 
 });
-vm.load();

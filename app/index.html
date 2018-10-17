@@ -78,20 +78,18 @@
         </div>
       </nav>
     </header>
-    <div class="fade-screen" v-bind:class="{ visible: isOpen}"></div>
+    <div class="fade-screen" v-bind:class="{visible: isOpen}"></div>
     <div class="container">
       <div class="row">
-
-        <div class="hidden" v-bind:class="{ hidden: isEmpty, visible: !isEmpty}">
-          <h2>No images found for `{{search}}`</h2>
+        <div v-if="filteredResults.length > 0" class="column flexContainer" v-for="( item,index2) in  filteredResults"
+          v-bind:key="index2">
+          <h2 v-html="item.iOs"></h2>
+          <vue-images class="item" v-for="( check, index)  in item.photos" v-bind:key="check.name" v-bind:item="check"
+            v-bind:group="item.group"></vue-images>
         </div>
 
-        <div v-bind:class="{ hidden: !isEmpty,visible: isEmpty}">
-          <div class="column flexContainer" v-for="( item,index2) in  filteredResults" v-bind:key="index2">
-            <h2 v-html="item.iOs "></h2>
-            <vue-images class="item" v-for="( check, index)  in item.photos" v-bind:key="check.name" v-bind:item="check"
-              v-bind:group="item.group"></vue-images>
-          </div>
+        <div>
+          <h2 v-html="searchResult"></h2>
         </div>
 
       </div>
